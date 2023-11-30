@@ -1,8 +1,26 @@
 const express = require("express");
 const Book = require("../models/book");
+const bookSchema = require("../schemas/bookSchema.json")
 
 const router = new express.Router();
 
+
+
+
+
+router. post ("/with-validation", function (req, res, next) {
+  const result = jsonschema.validate (req.body, bookSchema) ;
+  if (!result. valid) {
+  // pass validation errors to error handler
+  // (the "stack" key is generally the most useful)
+  let listOfErrors = result.errors.map (error => error.stack);
+  let error = new ExpressError (listOfErrors, 400);
+  return next (error);
+  }
+  // at this point in code, we know we have a valid payload
+  const { book } = req.body;
+  return res. json (book);
+});
 
 /** GET / => {books: [book, ...]}  */
 

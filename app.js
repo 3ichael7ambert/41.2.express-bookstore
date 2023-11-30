@@ -4,10 +4,16 @@
 const express = require("express");
 const app = express();
 
-app.use(express.json());
-
 const ExpressError = require("./expressError")
 const bookRoutes = require("./routes/books");
+
+
+
+
+
+
+app.use(express.json());
+
 
 app.use("/books", bookRoutes);
 
